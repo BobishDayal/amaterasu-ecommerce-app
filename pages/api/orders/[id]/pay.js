@@ -31,3 +31,5 @@ const handler = async () => {
     res.status(404).send({ message: "Error: order not found." });
   }
 };
+
+export default handler;

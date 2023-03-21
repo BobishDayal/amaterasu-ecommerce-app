@@ -6,8 +6,7 @@ import { toast } from "react-toastify";
 import CheckoutWizard from "../components/CheckoutWizard";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
-
-const PaymentScreen = () => {
+export default function PaymentScreen() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   const { state, dispatch } = useContext(Store);
@@ -24,23 +23,27 @@ const PaymentScreen = () => {
     dispatch({ type: "SAVE_PAYMENT_METHOD", payload: selectedPaymentMethod });
     Cookies.set(
       "cart",
-      JSON.stringify({ ...cart, paymentMethod: selectedPaymentMethod })
+      JSON.stringify({
+        ...cart,
+        paymentMethod: selectedPaymentMethod,
+      })
     );
-  };
 
+    router.push("/placeorder");
+  };
   useEffect(() => {
     if (!shippingAddress.address) {
       return router.push("/shipping");
     }
     setSelectedPaymentMethod(paymentMethod || "");
-  }, [paymentMethod, router, shippingAddress]);
+  }, [paymentMethod, router, shippingAddress.address]);
 
   return (
     <Layout title="Payment Method">
       <CheckoutWizard activeStep={2} />
       <form className="mx-auto max-w-screen-md" onSubmit={submitHandler}>
         <h1 className="mb-4 text-xl">Payment Method</h1>
-        {["PayPal", "Stripe", "Cash On Delivery (COD)"].map((payment) => (
+        {["PayPal", "Stripe", "CashOnDelivery"].map((payment) => (
           <div key={payment} className="mb-4">
             <input
               name="paymentMethod"
@@ -65,9 +68,9 @@ const PaymentScreen = () => {
             Back
           </button>
           <button
-            className="primary-button"
             onClick={() => router.push("/placeOrder")}
             type="button"
+            className="default-button"
           >
             Next
           </button>
@@ -75,7 +78,6 @@ const PaymentScreen = () => {
       </form>
     </Layout>
   );
-};
+}
 
-export default PaymentScreen;
 PaymentScreen.auth = true;
