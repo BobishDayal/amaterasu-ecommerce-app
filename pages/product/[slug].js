@@ -10,14 +10,12 @@ import Product from "../../models/Product";
 import db from "../../utils/db";
 import { Store } from "../../utils/Store";
 
-const ProductScreen = (props) => {
+export default function ProductScreen(props) {
   const { product } = props;
-
   const { state, dispatch } = useContext(Store);
   const router = useRouter();
-
   if (!product) {
-    return <Layout>Product not found</Layout>;
+    return <Layout title="Produt Not Found">Produt Not Found</Layout>;
   }
 
   const addToCartHandler = async () => {
@@ -26,40 +24,39 @@ const ProductScreen = (props) => {
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      return toast.error("Sorry!! Product is out of stock.");
+      return toast.error("Sorry. Product is out of stock");
     }
 
-    dispatch({
-      type: "CART_ADD_ITEM",
-      payload: { ...product, quantity: quantity },
-    });
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...product, quantity } });
+    router.push("/cart");
   };
 
   return (
     <Layout title={product.name}>
       <div className="py-2">
-        <Link href="/">Back to products</Link>
+        <Link href="/">back to products</Link>
       </div>
       <div className="grid md:grid-cols-4 md:gap-3">
         <div className="md:col-span-2">
           <Image
             src={product.image}
             alt={product.name}
-            width={600}
-            height={800}
+            width={640}
+            height={640}
             layout="responsive"
-          />
+          ></Image>
         </div>
         <div>
           <ul>
             <li>
               <h1 className="text-lg">{product.name}</h1>
             </li>
+            <li>Category: {product.category}</li>
             <li>Brand: {product.brand}</li>
             <li>
               {product.rating} of {product.numReviews} reviews
             </li>
-            <li>{product.description}</li>
+            <li>Description: {product.description}</li>
           </ul>
         </div>
         <div>
@@ -70,22 +67,20 @@ const ProductScreen = (props) => {
             </div>
             <div className="mb-2 flex justify-between">
               <div>Status</div>
-              <div>
-                {product.countInStock > 0 ? "in stock" : "out of stock"}
-              </div>
+              <div>{product.countInStock > 0 ? "In stock" : "Unavailable"}</div>
             </div>
             <button
               className="primary-button w-full"
               onClick={addToCartHandler}
             >
-              Add To Cart
+              Add to cart
             </button>
           </div>
         </div>
       </div>
     </Layout>
   );
-};
+}
 
 export async function getServerSideProps(context) {
   const { params } = context;
@@ -100,5 +95,3 @@ export async function getServerSideProps(context) {
     },
   };
 }
-
-export default ProductScreen;

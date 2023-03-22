@@ -1,6 +1,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useReducer } from "react";
+
 import Layout from "../components/Layout";
 import { getError } from "../utils/error";
 

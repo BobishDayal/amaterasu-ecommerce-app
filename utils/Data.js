@@ -1,17 +1,17 @@
 import bcrypt from "bcryptjs";
 
-const Data = {
+const data = {
   users: [
     {
       name: "John",
       email: "admin@example.com",
-      password: bcrypt.hashSync("1234567890123"),
+      password: bcrypt.hashSync("123456"),
       isAdmin: true,
     },
     {
       name: "Jane",
       email: "user@example.com",
-      password: bcrypt.hashSync("1234567890123"),
+      password: bcrypt.hashSync("123456"),
       isAdmin: false,
     },
   ],
@@ -27,6 +27,8 @@ const Data = {
       numReviews: 8,
       countInStock: 20,
       description: "A popular shirt",
+      isFeatured: true,
+      banner: "/images/banner1.jpg",
     },
     {
       name: "Fit Shirt",
@@ -39,6 +41,8 @@ const Data = {
       numReviews: 10,
       countInStock: 20,
       description: "A popular shirt",
+      isFeatured: true,
+      banner: "/images/banner2.jpg",
     },
     {
       name: "Slim Shirt",
@@ -62,7 +66,7 @@ const Data = {
       rating: 2.9,
       numReviews: 13,
       countInStock: 20,
-      description: "A popular pants",
+      description: "Smart looking pants",
     },
     {
       name: "Fit Pants",
@@ -91,4 +95,4 @@ const Data = {
   ],
 };
 
-export default Data;
+export default data;

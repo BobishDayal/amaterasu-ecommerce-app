@@ -1,50 +1,77 @@
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Menu } from "@headlessui/react";
 import Cookies from "js-cookie";
+import React, { useContext, useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import { Menu } from "@headlessui/react";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
+import { SearchIcon } from "@heroicons/react/outline";
 
 import { Store } from "../utils/Store";
 import DropdownLink from "./DropdownLink";
 
-const Layout = (props) => {
+export default function Layout({ title, children }) {
   const { status, data: session } = useSession();
 
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   const [cartItemsCount, setCartItemsCount] = useState(0);
-
-  const { title, children } = props;
-
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
   }, [cart.cartItems]);
 
   const logoutClickHandler = () => {
     Cookies.remove("cart");
-
     dispatch({ type: "CART_RESET" });
     signOut({ callbackUrl: "/login" });
+  };
+
+  const [query, setQuery] = useState("");
+
+  const router = useRouter();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push(`/search?query=${query}`);
   };
 
   return (
     <>
       <Head>
-        <title>{title ? title + " - Amaterasu" : "Amaterasu"}</title>
-        <meta name="description" content="E-Commerce Website" />
+        <title>{title ? title + " - Amazona" : "Amazona"}</title>
+        <meta name="description" content="Ecommerce Website" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <ToastContainer position="bottom-center" limit={1} />
-      <div className="flex min-h-screen flex-col justify-between">
+
+      <div className="flex min-h-screen flex-col justify-between ">
         <header>
-          <nav className="flex h-12 justify-between items-center px-4 shadow-md">
-            <Link href="/" legacyBehavior>
-              <a className="text-lg font-bold">Amaterasu</a>
+          <nav className="flex h-12 items-center px-4 justify-between shadow-md">
+            <Link href="/">
+              <a className="text-lg font-bold">amazona</a>
             </Link>
+            <form
+              onSubmit={submitHandler}
+              className="mx-auto  hidden w-full justify-center md:flex"
+            >
+              <input
+                onChange={(e) => setQuery(e.target.value)}
+                type="text"
+                className="rounded-tr-none rounded-br-none p-1 text-sm   focus:ring-0"
+                placeholder="Search products"
+              />
+              <button
+                className="rounded rounded-tl-none rounded-bl-none bg-amber-300 p-1 text-sm dark:text-black"
+                type="submit"
+                id="button-addon2"
+              >
+                <SearchIcon className="h-5 w-5"></SearchIcon>
+              </button>
+            </form>
             <div>
-              <Link href="/cart" legacyBehavior>
+              <Link href="/cart">
                 <a className="p-2">
                   Cart
                   {cartItemsCount > 0 && (
@@ -62,7 +89,7 @@ const Layout = (props) => {
                   <Menu.Button className="text-blue-600">
                     {session.user.name}
                   </Menu.Button>
-                  <Menu.Items className="absolute right-0 w-56 origin-top-right  shadow-lg">
+                  <Menu.Items className="absolute right-0 w-56 origin-top-right bg-white  shadow-lg ">
                     <Menu.Item>
                       <DropdownLink className="dropdown-link" href="/profile">
                         Profile
@@ -76,6 +103,16 @@ const Layout = (props) => {
                         Order History
                       </DropdownLink>
                     </Menu.Item>
+                    {session.user.isAdmin && (
+                      <Menu.Item>
+                        <DropdownLink
+                          className="dropdown-link"
+                          href="/admin/dashboard"
+                        >
+                          Admin Dashboard
+                        </DropdownLink>
+                      </Menu.Item>
+                    )}
                     <Menu.Item>
                       <a
                         className="dropdown-link"
@@ -88,7 +125,7 @@ const Layout = (props) => {
                   </Menu.Items>
                 </Menu>
               ) : (
-                <Link href="/login" legacyBehavior>
+                <Link href="/login">
                   <a className="p-2">Login</a>
                 </Link>
               )}
@@ -97,11 +134,9 @@ const Layout = (props) => {
         </header>
         <main className="container m-auto mt-4 px-4">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
-          <p>Copyright © 2023 Amaterasu</p>
+          <p>Copyright © 2022 Amazona</p>
         </footer>
       </div>
     </>
   );
-};
-
-export default Layout;
+}
