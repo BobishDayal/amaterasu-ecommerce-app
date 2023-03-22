@@ -27,6 +27,7 @@ export default function PlaceOrderScreen() {
   const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
   const router = useRouter();
+
   useEffect(() => {
     if (!paymentMethod) {
       router.push("/payment");

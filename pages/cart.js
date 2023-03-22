@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { XCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import axios from "axios";
@@ -89,7 +89,7 @@ const CartScreen = () => {
                     <td className="p-5 text-right">${item.price}</td>
                     <td className="p-5 text-center">
                       <button onClick={() => removeItemHandler(item)}>
-                        <TrashIcon className="h-5 w-5"></TrashIcon>
+                        <XCircleIcon className="h-5 w-5"></XCircleIcon>
                       </button>
                     </td>
                   </tr>

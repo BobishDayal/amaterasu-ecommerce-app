@@ -77,7 +77,7 @@ const OrderHistoryScreen = () => {
                       : "Not Delivered"}
                   </td>
                   <td className="p-5">
-                    <Link href={`/order/${order._id}`} passHref>
+                    <Link href={`/order/${order._id}`} passHref legacyBehavior>
                       <a>Details</a>
                     </Link>
                   </td>

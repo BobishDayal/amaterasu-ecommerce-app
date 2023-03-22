@@ -39,7 +39,7 @@ export default function Layout({ title, children }) {
   return (
     <>
       <Head>
-        <title>{title ? title + " - Amazona" : "Amazona"}</title>
+        <title>{title ? title + " - Amaterasu" : "Amaterasu"}</title>
         <meta name="description" content="Ecommerce Website" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -49,8 +49,8 @@ export default function Layout({ title, children }) {
       <div className="flex min-h-screen flex-col justify-between ">
         <header>
           <nav className="flex h-12 items-center px-4 justify-between shadow-md">
-            <Link href="/">
-              <a className="text-lg font-bold">amazona</a>
+            <Link href="/" legacyBehavior>
+              <a className="text-lg font-bold">Amaterasu</a>
             </Link>
             <form
               onSubmit={submitHandler}
@@ -71,7 +71,7 @@ export default function Layout({ title, children }) {
               </button>
             </form>
             <div>
-              <Link href="/cart">
+              <Link href="/cart" legacyBehavior>
                 <a className="p-2">
                   Cart
                   {cartItemsCount > 0 && (
@@ -125,7 +125,7 @@ export default function Layout({ title, children }) {
                   </Menu.Items>
                 </Menu>
               ) : (
-                <Link href="/login">
+                <Link href="/login" legacyBehavior>
                   <a className="p-2">Login</a>
                 </Link>
               )}
@@ -134,7 +134,7 @@ export default function Layout({ title, children }) {
         </header>
         <main className="container m-auto mt-4 px-4">{children}</main>
         <footer className="flex h-10 justify-center items-center shadow-inner">
-          <p>Copyright © 2022 Amazona</p>
+          <p>Copyright © 2022 Amaterasu</p>
         </footer>
       </div>
     </>
