@@ -41,7 +41,7 @@ export default function ProductScreen(props) {
           <Image
             src={product.image}
             alt={product.name}
-            width={640}
+            width={450}
             height={640}
             layout="responsive"
           ></Image>
@@ -49,7 +49,7 @@ export default function ProductScreen(props) {
         <div>
           <ul>
             <li>
-              <h1 className="text-lg">{product.name}</h1>
+              <h1 className="text-lg font-bold">{product.name}</h1>
             </li>
             <li>Category: {product.category}</li>
             <li>Brand: {product.brand}</li>
