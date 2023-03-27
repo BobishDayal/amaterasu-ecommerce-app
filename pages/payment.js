@@ -7,7 +7,6 @@ import CheckoutWizard from "../components/CheckoutWizard";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 
-
 export default function PaymentScreen() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
@@ -31,7 +30,7 @@ export default function PaymentScreen() {
       })
     );
 
-    router.push("/placeorder");
+    router.push("/placeOrder");
   };
   useEffect(() => {
     if (!shippingAddress.address) {
@@ -43,7 +42,7 @@ export default function PaymentScreen() {
   return (
     <Layout title="Payment Method">
       <CheckoutWizard activeStep={2} />
-      <form className="mx-auto max-w-screen-md" onSubmit={submitHandler}>
+      <form className="mx-auto max-w-screen-md">
         <h1 className="mb-4 text-xl">Payment Method</h1>
         {["PayPal", "Stripe", "CashOnDelivery"].map((payment) => (
           <div key={payment} className="mb-4">
@@ -70,9 +69,9 @@ export default function PaymentScreen() {
             Back
           </button>
           <button
-            onClick={() => router.push("/placeOrder")}
+            onClick={submitHandler}
             type="button"
-            className="default-button"
+            className="primary-button"
           >
             Next
           </button>
