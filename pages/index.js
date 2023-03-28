@@ -39,7 +39,7 @@ export default function Home({ products, featuredProducts }) {
                 <Image
                   src={product.banner}
                   alt={product.name}
-                  height={300}
+                  height={100}
                   width={800}
                 />
               </a>
