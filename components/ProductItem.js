@@ -1,15 +1,20 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const ProductItem = ({ product, addToCartHandler }) => {
   return (
     <div className="card">
       <Link href={`/product/${product.slug}`} legacyBehavior>
         <a className="object-contain">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="rounded shadow object-cover h-64 w-full"
-          />
+          <div className="object-cover w-full">
+            <Image
+              src={product.image}
+              alt={product.name}
+              // className="rounded shadow object-cover h-64 w-full"
+              height={400}
+              width={300}
+            />
+          </div>
         </a>
       </Link>
 

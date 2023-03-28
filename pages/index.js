@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Link from "next/link";
+import Image from "next/image";
 
 import Layout from "../components/Layout";
 import ProductItem from "../components/ProductItem";
@@ -35,7 +36,12 @@ export default function Home({ products, featuredProducts }) {
           <div key={product._id}>
             <Link href={`/product/${product.slug}`} passHref legacyBehavior>
               <a className="flex">
-                <img src={product.banner} alt={product.name} />
+                <Image
+                  src={product.banner}
+                  alt={product.name}
+                  height={300}
+                  width={800}
+                />
               </a>
             </Link>
           </div>
